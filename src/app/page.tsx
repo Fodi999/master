@@ -10,7 +10,7 @@ import Head from "next/head";
 const pages = [
   {
     title: "Fomin Dmitry Chef",
-    description: "About me: I have been professionally involved in food for 20 years...",
+    description: "About me: I have been professionally involved in food for 20 years, I have worked in different countries, I have seen many technologies on how to work and create new products.\n\nIn this Blog you will learn how to create new products, what equipment is needed, what modern technologies a chef should study to become not just a Chef but also a good manager of his Business.\n\nThis Blog is written for those who are ready to discover delicious combinations of flavors. I want to tell and teach you how to cook new dishes that I come up with and cook in order to surprise you, and share ideas and flavors with you.",
     image: "/00031.jpg",
     buttonText: "contact",
   },
@@ -105,34 +105,24 @@ export default function Home() {
         {isMenuOpen && (
           <div className="absolute top-16 left-0 w-full bg-white bg-opacity-90 dark:bg-black dark:bg-opacity-90 text-black dark:text-white flex justify-center py-4 z-50">
             <div className="flex space-x-2">
-              <a
-                href="#"
+              <button
                 className="px-2 py-1 rounded-full transition text-sm"
                 style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)' }}
                 onClick={toggleMenu}
               >
                 home
-              </a>
-              <a
-                href="#"
+              </button>
+              <button
                 className="px-2 py-1 rounded-full transition text-sm"
                 style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)' }}
                 onClick={toggleMenu}
               >
                 blog
-              </a>
-              <a
-                href="#"
-                className="px-2 py-1 rounded-full transition text-sm"
-                style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)' }}
-                onClick={toggleMenu}
-              >
-                contact
-              </a>
+              </button>
               <button
-                onClick={() => { toggleTheme(); toggleMenu(); }}
                 className="px-2 py-1 rounded-full transition text-sm"
                 style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)' }}
+                onClick={() => { toggleTheme(); toggleMenu(); }}
               >
                 {isDarkMode ? "Light Mode" : "Dark Mode"}
               </button>
@@ -142,72 +132,70 @@ export default function Home() {
 
         {/* Side Buttons for Desktop */}
         <div className="hidden md:flex fixed left-4 top-1/2 transform -translate-y-1/2 flex-col space-y-4 z-50">
-          <a
-            href="#"
-            className="px-4 py-2 rounded-full transition text-sm"
-            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)' }}
+          <Button
+            asChild
+            className="px-4 py-2 rounded-full transition text-sm font-semibold tracking-wide"
+            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase' }}
           >
-            home
-          </a>
-          <a
-            href="#"
-            className="px-4 py-2 rounded-full transition text-sm"
-            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)' }}
+            <a href="#">home</a>
+          </Button>
+          <Button
+            asChild
+            className="px-4 py-2 rounded-full transition text-sm font-semibold tracking-wide"
+            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase' }}
           >
-            blog
-          </a>
-          <a
-            href="#"
-            className="px-4 py-2 rounded-full transition text-sm"
-            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)' }}
+            <a href="#">blog</a>
+          </Button>
+          <Button
+            asChild
+            className="px-4 py-2 rounded-full transition text-sm font-semibold tracking-wide"
+            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase' }}
           >
-            contact
-          </a>
-          <button
+            <a href="#">contact</a>
+          </Button>
+          <Button
             onClick={toggleLanguage}
-            className="px-4 py-2 rounded-full shadow-lg transition-all duration-300"
-            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)' }}
+            className="px-4 py-2 rounded-full shadow-lg transition-all duration-300 text-sm font-semibold tracking-wide"
+            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase' }}
           >
             Language
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={toggleRecipes}
-            className="px-4 py-2 rounded-full shadow-lg transition-all duration-300"
-            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)' }}
+            className="px-4 py-2 rounded-full shadow-lg transition-all duration-300 text-sm font-semibold tracking-wide"
+            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase' }}
           >
             My Recipes
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={toggleTheme}
-            className="px-4 py-2 rounded-full shadow-lg transition-all duration-300"
-            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)' }}
+            className="px-4 py-2 rounded-full shadow-lg transition-all duration-300 text-sm font-semibold tracking-wide"
+            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase' }}
           >
             {isDarkMode ? "Light Mode" : "Dark Mode"}
-          </button>
+          </Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button
+                className="px-4 py-2 rounded-full shadow-lg transition-all duration-300 text-sm font-semibold tracking-wide"
+                style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase' }}
+              >
+                Contact
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="p-8 rounded-lg max-w-md w-full" style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)' }}>
+              <DialogTitle>Contact Form</DialogTitle>
+              <DialogDescription>
+                {/* Здесь будет форма для связи или информация */}
+                <span>Form or information about how to contact will be here.</span>
+              </DialogDescription>
+              <DialogFooter>
+                <Button onClick={() => alert("Form submission coming soon!")}>Submit</Button>
+                <Button variant="secondary" onClick={() => alert("Close modal!")}>Close</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
-
-        {/* Dialog for Contact Form */}
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button
-              className="fixed left-4 bottom-8 px-4 py-2 rounded-full shadow-lg transition-all duration-300 z-50"
-              style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)' }}
-            >
-              Contact
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="p-8 rounded-lg max-w-md w-full" style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)' }}>
-            <DialogTitle>Contact Form</DialogTitle>
-            <DialogDescription>
-              {/* Здесь будет форма для связи или информация */}
-              <span>Form or information about how to contact will be here.</span>
-            </DialogDescription>
-            <DialogFooter>
-              <Button onClick={() => alert("Form submission coming soon!")}>Submit</Button>
-              <Button variant="secondary" onClick={() => alert("Close modal!")}>Close</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
 
         {/* Main Content */}
         <main className="flex flex-col md:flex-row items-center justify-center w-full max-w-6xl px-4 md:px-12 py-24">
@@ -222,8 +210,8 @@ export default function Home() {
                 {pages[currentPage].description}
               </p>
               <Button
-                className="mt-4"
-                style={{ color: 'var(--button-text)' }}
+                className="mt-4 px-4 py-2 rounded-full shadow-lg transition-all duration-300 text-sm font-semibold tracking-wide"
+                style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase' }}
                 onClick={toggleAccordion}
               >
                 {isExpanded ? "Show less" : "Continue reading"}
@@ -241,29 +229,35 @@ export default function Home() {
           </div>
         </main>
 
-        {/* Accordion */}
-        <div className="w-full max-w-6xl px-4 md:px-12 py-8">
-          <Accordion type="single" collapsible>
-            <AccordionItem value="item-1">
-              <AccordionTrigger>Section 1</AccordionTrigger>
-              <AccordionContent>
-                Content for section 1.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-2">
-              <AccordionTrigger>Section 2</AccordionTrigger>
-              <AccordionContent>
-                Content for section 2.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-3">
-              <AccordionTrigger>Section 3</AccordionTrigger>
-              <AccordionContent>
-                Content for section 3.
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </div>
+ {/* Accordion */}
+<div className="w-full max-w-5xl px-6 md:px-12 py-8 -mt-20 bg-black bg-opacity-70 rounded-lg">
+  <Accordion type="single" collapsible>
+    <AccordionItem value="item-1">
+      <AccordionTrigger className="px-4 py-2 bg-gray-200 dark:bg-gray-800 rounded-t-lg text-left text-lg font-semibold cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700 transition">
+        Section 1
+      </AccordionTrigger>
+      <AccordionContent className="px-4 py-2 bg-gray-100 dark:bg-gray-900 rounded-b-lg text-base">
+        Content for section 1.
+      </AccordionContent>
+    </AccordionItem>
+    <AccordionItem value="item-2">
+      <AccordionTrigger className="mt-2 px-4 py-2 bg-gray-200 dark:bg-gray-800 rounded-t-lg text-left text-lg font-semibold cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700 transition">
+        Section 2
+      </AccordionTrigger>
+      <AccordionContent className="px-4 py-2 bg-gray-100 dark:bg-gray-900 rounded-b-lg text-base">
+        Content for section 2.
+      </AccordionContent>
+    </AccordionItem>
+    <AccordionItem value="item-3">
+      <AccordionTrigger className="mt-2 px-4 py-2 bg-gray-200 dark:bg-gray-800 rounded-t-lg text-left text-lg font-semibold cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700 transition">
+        Section 3
+      </AccordionTrigger>
+      <AccordionContent className="px-4 py-2 bg-gray-100 dark:bg-gray-900 rounded-b-lg text-base">
+        Content for section 3.
+      </AccordionContent>
+    </AccordionItem>
+  </Accordion>
+</div>
 
         {/* Recipes Drawer */}
         {showRecipes && (
@@ -301,15 +295,13 @@ export default function Home() {
 
         {/* Footer */}
         <footer className="w-full text-center py-4 flex justify-center items-center">
-          <div className="border-t border-gray-700 w-1/3"></div>
-          <div className="text-sm px-4">view projects</div>
-          <div className="border-t border-gray-700 w-1/3"></div>
-        </footer>
+  <div className="border-t border-gray-700 w-1/3"></div>
+  <div className="text-sm px-4">
+    view projects <a href="https://www.facebook.com/dima.fomin" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Dima Fomin</a>
+  </div>
+  <div className="border-t border-gray-700 w-1/3"></div>
+</footer>
       </div>
     </>
   );
 }
-
-
-
-
