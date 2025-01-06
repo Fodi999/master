@@ -6,35 +6,9 @@ import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Head from "next/head";
+import content from './locales/en.json'; // импорт JSON файла
 
-const pages = [
-  {
-    title: "Fomin Dmitry Chef",
-    description: "About me: I have been professionally involved in food for 20 years, I have worked in different countries, I have seen many technologies on how to work and create new products.\n\nIn this Blog you will learn how to create new products, what equipment is needed, what modern technologies a chef should study to become not just a Chef but also a good manager of his Business.\n\nThis Blog is written for those who are ready to discover delicious combinations of flavors. I want to tell and teach you how to cook new dishes that I come up with and cook in order to surprise you, and share ideas and flavors with you.",
-    image: "/00031.jpg",
-    buttonText: "contact",
-  },
-  {
-    title: "Portfolio Showcase",
-    description: "Explore my creative works and projects...",
-    image: "/00030.jpg",
-    buttonText: "view portfolio",
-  },
-  {
-    title: "Get in Touch",
-    description: "Have questions or want to collaborate?",
-    image: "/00029.jpg",
-    buttonText: "connect",
-  },
-];
-
-const recipesSections = [
-  "01. How to choose products?",
-  "02. How to make a menu?",
-  "03. Equipment essentials",
-  "04. Modern cooking techniques",
-  "05. Business management for chefs",
-];
+const { pages, recipesSections, accordionSections, contactForm, buttons } = content;
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState(0);
@@ -94,7 +68,7 @@ export default function Home() {
           </div>
           <button
             className="md:hidden px-2 py-1 rounded-full transition"
-            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)' }}
+            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', opacity: 0.7 }}
             onClick={toggleMenu}
           >
             ☰
@@ -105,27 +79,54 @@ export default function Home() {
         {isMenuOpen && (
           <div className="absolute top-16 left-0 w-full bg-white bg-opacity-90 dark:bg-black dark:bg-opacity-90 text-black dark:text-white flex justify-center py-4 z-50">
             <div className="flex space-x-2">
+              <Button
+                onClick={toggleRecipes}
+                className="px-2 py-1 rounded-full transition text-sm"
+                style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', opacity: 0.7 }}
+              >
+                {buttons.myRecipes}
+              </Button>
+              <Button
+                onClick={toggleLanguage}
+                className="px-2 py-1 rounded-full transition text-sm"
+                style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', opacity: 0.7 }}
+              >
+                {buttons.language}
+              </Button>
               <button
                 className="px-2 py-1 rounded-full transition text-sm"
-                style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)' }}
+                style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', opacity: 0.7 }}
                 onClick={toggleMenu}
               >
-                home
+                {buttons.blog}
               </button>
               <button
                 className="px-2 py-1 rounded-full transition text-sm"
-                style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)' }}
-                onClick={toggleMenu}
-              >
-                blog
-              </button>
-              <button
-                className="px-2 py-1 rounded-full transition text-sm"
-                style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)' }}
+                style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', opacity: 0.7 }}
                 onClick={() => { toggleTheme(); toggleMenu(); }}
               >
-                {isDarkMode ? "Light Mode" : "Dark Mode"}
+                {isDarkMode ? buttons.lightMode : buttons.darkMode}
               </button>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button
+                    className="px-2 py-1 rounded-full transition text-sm"
+                    style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', opacity: 0.7 }}
+                  >
+                    {buttons.contact}
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="p-8 rounded-lg max-w-md w-full" style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', opacity: 0.7 }}>
+                  <DialogTitle>{contactForm.title}</DialogTitle>
+                  <DialogDescription>
+                    {contactForm.description}
+                  </DialogDescription>
+                  <DialogFooter>
+                    <Button onClick={() => alert("Form submission coming soon!")}>{buttons.submit}</Button>
+                    <Button variant="secondary" onClick={() => alert("Close modal!")}>{buttons.close}</Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
         )}
@@ -135,63 +136,48 @@ export default function Home() {
           <Button
             asChild
             className="px-4 py-2 rounded-full transition text-sm font-semibold tracking-wide"
-            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase' }}
+            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase', opacity: 0.7 }}
           >
-            <a href="#">home</a>
-          </Button>
-          <Button
-            asChild
-            className="px-4 py-2 rounded-full transition text-sm font-semibold tracking-wide"
-            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase' }}
-          >
-            <a href="#">blog</a>
-          </Button>
-          <Button
-            asChild
-            className="px-4 py-2 rounded-full transition text-sm font-semibold tracking-wide"
-            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase' }}
-          >
-            <a href="#">contact</a>
+            <a href="#">{buttons.blog}</a>
           </Button>
           <Button
             onClick={toggleLanguage}
             className="px-4 py-2 rounded-full shadow-lg transition-all duration-300 text-sm font-semibold tracking-wide"
-            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase' }}
+            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase', opacity: 0.7 }}
           >
-            Language
+            {buttons.language}
           </Button>
           <Button
             onClick={toggleRecipes}
             className="px-4 py-2 rounded-full shadow-lg transition-all duration-300 text-sm font-semibold tracking-wide"
-            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase' }}
+            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase', opacity: 0.7 }}
           >
-            My Recipes
+            {buttons.myRecipes}
           </Button>
           <Button
             onClick={toggleTheme}
             className="px-4 py-2 rounded-full shadow-lg transition-all duration-300 text-sm font-semibold tracking-wide"
-            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase' }}
+            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase', opacity: 0.7 }}
           >
-            {isDarkMode ? "Light Mode" : "Dark Mode"}
+            {isDarkMode ? buttons.lightMode : buttons.darkMode}
           </Button>
           <Dialog>
             <DialogTrigger asChild>
               <Button
                 className="px-4 py-2 rounded-full shadow-lg transition-all duration-300 text-sm font-semibold tracking-wide"
-                style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase' }}
+                style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase', opacity: 0.7 }}
               >
-                Contact
+                {buttons.contact}
               </Button>
             </DialogTrigger>
-            <DialogContent className="p-8 rounded-lg max-w-md w-full" style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)' }}>
-              <DialogTitle>Contact Form</DialogTitle>
+            <DialogContent className="p-8 rounded-lg max-w-md w-full" style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', opacity: 0.7 }}>
+              <DialogTitle>{contactForm.title}</DialogTitle>
               <DialogDescription>
-                {/* Здесь будет форма для связи или информация */}
-                <span>Form or information about how to contact will be here.</span>
+                {contactForm.description}
               </DialogDescription>
               <DialogFooter>
-                <Button onClick={() => alert("Form submission coming soon!")}>Submit</Button>
-                <Button variant="secondary" onClick={() => alert("Close modal!")}>Close</Button>
+                <Button onClick={() => alert("Form submission coming soon!")}>{buttons.submit}</Button>
+                <Button variant="secondary" onClick={() => alert("Close modal!")}>{buttons.close}</Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>
@@ -201,7 +187,7 @@ export default function Home() {
         <main className="flex flex-col md:flex-row items-center justify-center w-full max-w-6xl px-4 md:px-12 py-24">
           <div className="flex-1 text-center md:text-left">
             <h1 className="text-4xl md:text-5xl font-semibold leading-tight">
-              {pages[currentPage].title}
+              <span dangerouslySetInnerHTML={{ __html: pages[currentPage].title }} />
             </h1>
             <div
               className={`text-lg mt-2 transition-opacity duration-300 ${isTextDimmed ? "text-gray-500" : "text-gray-400"}`}
@@ -211,10 +197,10 @@ export default function Home() {
               </p>
               <Button
                 className="mt-4 px-4 py-2 rounded-full shadow-lg transition-all duration-300 text-sm font-semibold tracking-wide"
-                style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase' }}
+                style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase', opacity: 0.7 }}
                 onClick={toggleAccordion}
               >
-                {isExpanded ? "Show less" : "Continue reading"}
+                {isExpanded ? buttons.showLess : buttons.continueReading}
               </Button>
             </div>
           </div>
@@ -228,36 +214,21 @@ export default function Home() {
             />
           </div>
         </main>
-
- {/* Accordion */}
-<div className="w-full max-w-5xl px-6 md:px-12 py-8 -mt-20 bg-black bg-opacity-70 rounded-lg">
-  <Accordion type="single" collapsible>
-    <AccordionItem value="item-1">
-      <AccordionTrigger className="px-4 py-2 bg-gray-200 dark:bg-gray-800 rounded-t-lg text-left text-lg font-semibold cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700 transition">
-        Section 1
-      </AccordionTrigger>
-      <AccordionContent className="px-4 py-2 bg-gray-100 dark:bg-gray-900 rounded-b-lg text-base">
-        Content for section 1.
-      </AccordionContent>
-    </AccordionItem>
-    <AccordionItem value="item-2">
-      <AccordionTrigger className="mt-2 px-4 py-2 bg-gray-200 dark:bg-gray-800 rounded-t-lg text-left text-lg font-semibold cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700 transition">
-        Section 2
-      </AccordionTrigger>
-      <AccordionContent className="px-4 py-2 bg-gray-100 dark:bg-gray-900 rounded-b-lg text-base">
-        Content for section 2.
-      </AccordionContent>
-    </AccordionItem>
-    <AccordionItem value="item-3">
-      <AccordionTrigger className="mt-2 px-4 py-2 bg-gray-200 dark:bg-gray-800 rounded-t-lg text-left text-lg font-semibold cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700 transition">
-        Section 3
-      </AccordionTrigger>
-      <AccordionContent className="px-4 py-2 bg-gray-100 dark:bg-gray-900 rounded-b-lg text-base">
-        Content for section 3.
-      </AccordionContent>
-    </AccordionItem>
-  </Accordion>
-</div>
+        {/* Accordion */}
+        <div className="w-full max-w-5xl px-4 md:px-12 py-8 -mt-20 bg-gray-100 dark:bg-gray-900 rounded-lg mx-4 md:mx-auto shadow-lg">
+          <Accordion type="single" collapsible>
+            {accordionSections.map((section, index) => (
+              <AccordionItem key={index} value={`item-${index + 1}`} className="mb-4">
+                <AccordionTrigger className="px-4 py-2 bg-gray-200 dark:bg-gray-800 rounded-t-lg text-left text-lg font-semibold cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700 transition">
+                  {section.title}
+                </AccordionTrigger>
+                <AccordionContent className="px-4 py-2 bg-gray-50 dark:bg-gray-900 rounded-b-lg text-base text-black dark:text-white transition-colors duration-300">
+                  {section.content}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
 
         {/* Recipes Drawer */}
         {showRecipes && (
@@ -273,10 +244,10 @@ export default function Home() {
               </ul>
               <Button
                 className="mt-6 px-6 py-3 w-full rounded-full transition"
-                style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)' }}
+                style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', opacity: 0.7 }}
                 onClick={toggleRecipes}
               >
-                Close
+                {buttons.close}
               </Button>
             </div>
           </div>
@@ -294,13 +265,13 @@ export default function Home() {
         </div>
 
         {/* Footer */}
-        <footer className="w-full text-center py-4 flex justify-center items-center">
-  <div className="border-t border-gray-700 w-1/3"></div>
-  <div className="text-sm px-4">
-    view projects <a href="https://www.facebook.com/dima.fomin" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Dima Fomin</a>
-  </div>
-  <div className="border-t border-gray-700 w-1/3"></div>
-</footer>
+        <footer className="w-full text-center py-4 flex flex-wrap justify-center items-center">
+          <div className="border-t border-gray-700 w-full md:w-1/3"></div>
+          <div className="text-sm px-4 whitespace-nowrap">
+           web sushi master <a href="https://www.facebook.com/dima.fomin" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Dima Fomin</a>
+          </div>
+          <div className="border-t border-gray-700 w-full md:w-1/3"></div>
+        </footer>
       </div>
     </>
   );

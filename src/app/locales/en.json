@@ -1,0 +1,60 @@
+{
+    "pages": [
+      {
+        "title": "Sushi Master Dima <span style='color: red;'>Fomin</span>",
+        "description": "About me: I have been professionally involved in food for 20 years, I have worked in different countries, I have seen many technologies on how to work and create new products.\n\nIn this Blog you will learn how to create new products, what equipment is needed, what modern technologies a chef should study to become not just a Chef but also a good manager of his Business.\n\nThis Blog is written for those who are ready to discover delicious combinations of flavors. I want to tell and teach you how to cook new dishes that I come up with and cook in order to surprise you, and share ideas and flavors with you.",
+        "image": "/00031.jpg",
+        "buttonText": "contact"
+      },
+      {
+        "title": "Portfolio Showcase",
+        "description": "Explore my creative works and projects...",
+        "image": "/00030.jpg",
+        "buttonText": "view portfolio"
+      },
+      {
+        "title": "Get in Touch",
+        "description": "Have questions or want to collaborate?",
+        "image": "/00029.jpg",
+        "buttonText": "connect"
+      }
+    ],
+    "recipesSections": [
+      "01. How to choose products?",
+      "02. How to make a menu?",
+      "03. Equipment essentials",
+      "04. Modern cooking techniques",
+      "05. Business management for chefs"
+    ],
+    "accordionSections": [
+      {
+        "title": "Section 1",
+        "content": "Content for section 1."
+      },
+      {
+        "title": "Section 2",
+        "content": "Content for section 2."
+      },
+      {
+        "title": "Section 3",
+        "content": "Content for section 3."
+      }
+    ],
+    "contactForm": {
+      "title": "Contact Form",
+      "description": "Form or information about how to contact will be here."
+    },
+    "buttons": {
+      "home": "home",
+      "blog": "blog",
+      "contact": "contact",
+      "language": "Language",
+      "myRecipes": "My Recipes",
+      "lightMode": "Light Mode",
+      "darkMode": "Dark Mode",
+      "showLess": "Show less",
+      "continueReading": "Continue reading",
+      "close": "Close",
+      "submit": "Submit"
+    }
+  }
