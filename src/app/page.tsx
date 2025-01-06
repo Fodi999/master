@@ -6,6 +6,7 @@ import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Head from "next/head";
+import Link from "next/link";
 import content from './locales/en.json'; // импорт JSON файла
 
 const { pages, recipesSections, accordionSections, contactForm, buttons } = content;
@@ -93,13 +94,15 @@ export default function Home() {
               >
                 {buttons.language}
               </Button>
-              <button
-                className="px-2 py-1 rounded-full transition text-sm"
-                style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', opacity: 0.7 }}
-                onClick={toggleMenu}
-              >
-                {buttons.blog}
-              </button>
+              <Link href="/blog">
+                <Button
+                  className="px-2 py-1 rounded-full transition text-sm"
+                  style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', opacity: 0.7 }}
+                  onClick={toggleMenu}
+                >
+                  {buttons.blog}
+                </Button>
+              </Link>
               <button
                 className="px-2 py-1 rounded-full transition text-sm"
                 style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', opacity: 0.7 }}
@@ -133,13 +136,14 @@ export default function Home() {
 
         {/* Side Buttons for Desktop */}
         <div className="hidden md:flex fixed left-4 top-1/2 transform -translate-y-1/2 flex-col space-y-4 z-50">
-          <Button
-            asChild
-            className="px-4 py-2 rounded-full transition text-sm font-semibold tracking-wide"
-            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase', opacity: 0.7 }}
-          >
-            <a href="#">{buttons.blog}</a>
-          </Button>
+          <Link href="/blog">
+            <Button
+              className="px-4 py-2 rounded-full transition text-sm font-semibold tracking-wide"
+              style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase', opacity: 0.7 }}
+            >
+              {buttons.blog}
+            </Button>
+          </Link>
           <Button
             onClick={toggleLanguage}
             className="px-4 py-2 rounded-full shadow-lg transition-all duration-300 text-sm font-semibold tracking-wide"
@@ -211,6 +215,7 @@ export default function Home() {
               width={400}
               height={400}
               className="rounded-lg object-cover"
+              priority
             />
           </div>
         </main>
