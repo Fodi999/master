@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Head from "next/head";
 import Link from "next/link";
-import content from '../locales/en.json'; // импорт JSON файла
+import content from "../locales/en.json"; // импорт JSON файла
 
 const { buttons } = content;
 
@@ -15,9 +15,9 @@ export default function Blog() {
 
   useEffect(() => {
     if (isDarkMode) {
-      document.documentElement.classList.add('dark');
+      document.documentElement.classList.add("dark");
     } else {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.remove("dark");
     }
   }, [isDarkMode]);
 
@@ -39,19 +39,27 @@ export default function Blog() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Blog - Fomin Dmitry Chef</title>
       </Head>
-      <div className="relative w-full min-h-screen flex flex-col justify-between items-center bg-white dark:bg-black text-black dark:text-white">
+      <div className="relative w-full min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
         {/* Header */}
-        <header className="absolute top-0 left-0 w-full flex justify-between items-center px-4 py-4 md:px-8">
+        <header className="w-full flex justify-between items-center px-6 py-4 bg-white dark:bg-gray-800 shadow-md">
           <div className="flex items-center space-x-4">
             <Image src="/svg%201.svg" alt="Logo" width={40} height={40} />
-            <div className="text-xl font-bold underline decoration-sky-500/30">
-              <span className="text-blue-400">Fomin</span> <span className="text-green-400">Dmitry</span> <span className="text-orange-500">Chef</span>
-            </div>
+            <h1 className="text-xl font-bold text-blue-500">Fomin Dmitry Chef</h1>
+          </div>
+          <div className="hidden md:flex space-x-4">
+            <Button onClick={toggleLanguage} className="px-4 py-2 rounded-full shadow-lg">
+              {buttons.language}
+            </Button>
+            <Button onClick={toggleTheme} className="px-4 py-2 rounded-full shadow-lg">
+              {isDarkMode ? buttons.lightMode : buttons.darkMode}
+            </Button>
+            <Link href="/">
+              <Button className="px-4 py-2 rounded-full shadow-lg">{buttons.home}</Button>
+            </Link>
           </div>
           <button
-            className="md:hidden px-2 py-1 rounded-full transition"
-            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', opacity: 0.7 }}
             onClick={toggleMenu}
+            className="md:hidden px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-full"
           >
             ☰
           </button>
@@ -59,92 +67,67 @@ export default function Blog() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="absolute top-16 left-0 w-full bg-white bg-opacity-90 dark:bg-black dark:bg-opacity-90 text-black dark:text-white flex justify-center py-4 z-50">
-            <div className="flex space-x-2">
-              <Button
-                onClick={toggleLanguage}
-                className="px-2 py-1 rounded-full transition text-sm"
-                style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', opacity: 0.7 }}
-              >
+          <div className="absolute top-16 left-0 w-full bg-white dark:bg-gray-800 shadow-lg z-50 p-4">
+            <div className="flex flex-col space-y-2">
+              <Link href="/" onClick={toggleMenu}>
+                <Button className="text-sm font-semibold">{buttons.home}</Button>
+              </Link>
+              <Button onClick={toggleLanguage} className="text-sm font-semibold">
                 {buttons.language}
               </Button>
-              <Link href="/">
-                <Button
-                  className="px-2 py-1 rounded-full transition text-sm"
-                  style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', opacity: 0.7 }}
-                  onClick={toggleMenu}
-                >
-                  {buttons.home}
-                </Button>
-              </Link>
-              <button
-                className="px-2 py-1 rounded-full transition text-sm"
-                style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', opacity: 0.7 }}
-                onClick={() => { toggleTheme(); toggleMenu(); }}
-              >
+              <Button onClick={toggleTheme} className="text-sm font-semibold">
                 {isDarkMode ? buttons.lightMode : buttons.darkMode}
-              </button>
+              </Button>
             </div>
           </div>
         )}
 
-        {/* Side Buttons for Desktop */}
-        <div className="hidden md:flex fixed left-4 top-1/2 transform -translate-y-1/2 flex-col space-y-4 z-50">
-          <Link href="/">
-            <Button
-              className="px-4 py-2 rounded-full transition text-sm font-semibold tracking-wide"
-              style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase', opacity: 0.7 }}
-            >
-              {buttons.home}
-            </Button>
-          </Link>
-          <Button
-            onClick={toggleLanguage}
-            className="px-4 py-2 rounded-full shadow-lg transition-all duration-300 text-sm font-semibold tracking-wide"
-            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase', opacity: 0.7 }}
-          >
-            {buttons.language}
-          </Button>
-          <Button
-            onClick={toggleTheme}
-            className="px-4 py-2 rounded-full shadow-lg transition-all duration-300 text-sm font-semibold tracking-wide"
-            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase', opacity: 0.7 }}
-          >
-            {isDarkMode ? buttons.lightMode : buttons.darkMode}
-          </Button>
-        </div>
-
         {/* Main Content */}
-        <main className="flex flex-col items-center justify-center w-full max-w-6xl px-4 md:px-12 py-24">
-          <h1 className="text-4xl md:text-5xl font-semibold leading-tight mt-10">Blog Page</h1>
-          <p className="text-lg mt-2">Welcome to the blog page!</p>
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Пример статьи блога */}
-            <article className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden flex" style={{ width: "500px", height: "400px" }}>
-              <div className="w-1/3 h-full">
-                <Image src="/00031.jpg" alt="Blog Image" width={500} height={400} className="object-cover w-full h-full" />
-              </div>
-              <div className="p-6 flex flex-col justify-between w-2/3">
-                <div>
-                  <h2 className="text-2xl font-bold mb-2">Blog Post Title</h2>
-                  <p className="text-gray-700 dark:text-gray-300 mb-4">This is a short description of the blog post. It gives a brief overview of the content.</p>
-                </div>
+        <main className="container mx-auto px-6 py-12 flex-grow">
+          <h1 className="text-3xl font-bold mb-6">Welcome to the Blog</h1>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Example Blog Post */}
+            <article className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+              <Image src="/00031.jpg" alt="Blog Image" width={500} height={300} className="w-full h-40 object-cover" />
+              <div className="p-4">
+                <h2 className="text-xl font-bold mb-2">Blog Post Title</h2>
+                <p className="text-gray-700 dark:text-gray-300 mb-4">
+                  This is a short description of the blog post.
+                </p>
                 <Link href="/blog/1">
-                  <Button className="text-blue-500 hover:underline">Read more</Button>
+                  <Button className="text-blue-500 hover:underline">Read More</Button>
                 </Link>
               </div>
             </article>
-            {/* Добавьте больше статей блога здесь */}
+            {/* Add more blog posts */}
+            <article className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+              <Image src="/00031.jpg" alt="Blog Image" width={500} height={300} className="w-full h-40 object-cover" />
+              <div className="p-4">
+                <h2 className="text-xl font-bold mb-2">Another Blog Post</h2>
+                <p className="text-gray-700 dark:text-gray-300 mb-4">
+                  This is another short description for the blog post.
+                </p>
+                <Link href="/blog/2">
+                  <Button className="text-blue-500 hover:underline">Read More</Button>
+                </Link>
+              </div>
+            </article>
           </div>
         </main>
 
         {/* Footer */}
-        <footer className="w-full text-center py-4 flex flex-wrap justify-center items-center">
-          <div className="border-t border-gray-700 w-full md:w-1/3"></div>
-          <div className="text-sm px-4 whitespace-nowrap">
-           web sushi master <a href="https://www.facebook.com/dima.fomin" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Dima Fomin</a>
-          </div>
-          <div className="border-t border-gray-700 w-full md:w-1/3"></div>
+        <footer className="w-full bg-gray-100 dark:bg-gray-800 py-4 text-center mt-auto">
+          <p className="text-sm">
+            Web Sushi Master by{" "}
+            <a
+              href="https://www.facebook.com/dima.fomin"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 hover:underline"
+            >
+              Dima Fomin
+            </a>
+          </p>
         </footer>
       </div>
     </>
