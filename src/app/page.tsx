@@ -2,12 +2,13 @@
 
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger, DialogContent, DialogFooter, DialogTitle, DialogDescription } from "@/components/ui/dialog"; // импорт Dialog
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"; // импорт Accordion
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import Head from "next/head";
 import Link from "next/link";
 import content from './locales/en.json'; // импорт JSON файла
+import AccordionComponent from "@/components/AccordionComponent"; // импорт нового компонента
+import Header from "@/components/Header"; // импорт Header компонента
+import MainContent from "@/components/MainContent"; // импорт MainContent компонента
 
 const { pages, recipesSections, accordionSections, contactForm, buttons } = content;
 
@@ -59,80 +60,16 @@ export default function Home() {
         <title>Fomin Dmitry Chef</title>
       </Head>
       <div className="relative w-full min-h-screen flex flex-col justify-between items-center bg-white dark:bg-black text-black dark:text-white">
-        {/* Header */}
-        <header className="absolute top-0 left-0 w-full flex justify-between items-center px-4 py-4 md:px-8">
-          <div className="flex items-center space-x-4">
-            <Image src="/svg%201.svg" alt="Logo" width={40} height={40} />
-            <div className="text-xl font-bold underline decoration-sky-500/30">
-              <span className="text-blue-400">Fomin</span> <span className="text-green-400">Dmitry</span> <span className="text-orange-500">Chef</span>
-            </div>
-          </div>
-          <button
-            className="md:hidden px-2 py-1 rounded-full transition"
-            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', opacity: 0.7 }}
-            onClick={toggleMenu}
-          >
-            ☰
-          </button>
-        </header>
-
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="absolute top-16 left-0 w-full bg-white bg-opacity-90 dark:bg-black dark:bg-opacity-90 text-black dark:text-white flex justify-center py-4 z-50">
-            <div className="flex space-x-2">
-              <Button
-                onClick={toggleRecipes}
-                className="px-2 py-1 rounded-full transition text-sm"
-                style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', opacity: 0.7 }}
-              >
-                {buttons.myRecipes}
-              </Button>
-              <Button
-                onClick={toggleLanguage}
-                className="px-2 py-1 rounded-full transition text-sm"
-                style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', opacity: 0.7 }}
-              >
-                {buttons.language}
-              </Button>
-              <Link href="/blog">
-                <Button
-                  className="px-2 py-1 rounded-full transition text-sm"
-                  style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', opacity: 0.7 }}
-                  onClick={toggleMenu}
-                >
-                  {buttons.blog}
-                </Button>
-              </Link>
-              <button
-                className="px-2 py-1 rounded-full transition text-sm"
-                style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', opacity: 0.7 }}
-                onClick={() => { toggleTheme(); toggleMenu(); }}
-              >
-                {isDarkMode ? buttons.lightMode : buttons.darkMode}
-              </button>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button
-                    className="px-2 py-1 rounded-full transition text-sm"
-                    style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', opacity: 0.7 }}
-                  >
-                    {buttons.contact}
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="p-8 rounded-lg max-w-md w-full" style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', opacity: 0.7 }}>
-                  <DialogTitle>{contactForm.title}</DialogTitle>
-                  <DialogDescription>
-                    {contactForm.description}
-                  </DialogDescription>
-                  <DialogFooter>
-                    <Button onClick={() => alert("Form submission coming soon!")}>{buttons.submit}</Button>
-                    <Button variant="secondary" onClick={() => alert("Close modal!")}>{buttons.close}</Button>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
-            </div>
-          </div>
-        )}
+        <Header
+          toggleMenu={toggleMenu}
+          isMenuOpen={isMenuOpen}
+          toggleRecipes={toggleRecipes}
+          toggleLanguage={toggleLanguage}
+          toggleTheme={toggleTheme}
+          isDarkMode={isDarkMode}
+          buttons={buttons}
+          contactForm={contactForm}
+        />
 
         {/* Side Buttons for Desktop */}
         <div className="hidden md:flex fixed left-4 top-1/2 transform -translate-y-1/2 flex-col space-y-4 z-50">
@@ -188,62 +125,17 @@ export default function Home() {
         </div>
 
         {/* Main Content */}
-        <main className="flex flex-col md:flex-row items-center justify-center w-full max-w-6xl px-4 md:px-12 py-24">
-          <div className="flex-1 text-center md:text-left">
-            <h1 className="text-4xl md:text-5xl font-semibold leading-tight">
-              <span dangerouslySetInnerHTML={{ __html: pages[currentPage].title }} />
-            </h1>
-            <div
-              className={`text-lg mt-2 transition-opacity duration-300 ${isTextDimmed ? "text-gray-500" : "text-gray-400"}`}
-            >
-              <p className={`whitespace-pre-line ${isExpanded ? "block" : "line-clamp-3"}`}>
-                {pages[currentPage].description}
-              </p>
-              <Button
-                className="mt-4 px-4 py-2 rounded-full shadow-lg transition-all duration-300 text-sm font-semibold tracking-wide"
-                style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase', opacity: 0.7 }}
-                onClick={toggleAccordion}
-              >
-                {isExpanded ? buttons.showLess : buttons.continueReading}
-              </Button>
-            </div>
-          </div>
-          <div className="flex-1 mt-10 md:mt-0">
-            <Image
-              src={pages[currentPage].image}
-              alt={pages[currentPage].title}
-              width={400}
-              height={400}
-              className="rounded-lg object-cover"
-              priority
-            />
-          </div>
-        </main>
-        {/* Accordion */}
-        <div className="w-full max-w-5xl mx-auto py-8 px-4 bg-gray-100 dark:bg-gray-900">
-          {/* Название аккордеона */}
-          <h2 className="text-2xl font-bold text-black dark:text-white mb-6">
-            Frequently Asked Questions
-          </h2>
+        <MainContent
+          pages={pages}
+          currentPage={currentPage}
+          isExpanded={isExpanded}
+          isTextDimmed={isTextDimmed}
+          toggleAccordion={toggleAccordion}
+          buttons={buttons}
+        />
 
-          {/* Аккордеон */}
-          <Accordion type="single" collapsible>
-            {accordionSections.map((section, index) => (
-              <AccordionItem
-                key={index}
-                value={`item-${index + 1}`}
-                className="border-b border-gray-300 dark:border-gray-700"
-              >
-                <AccordionTrigger className="flex justify-between items-center w-full py-4 text-lg font-semibold text-black dark:text-white">
-                  <span className="text-sm md:text-lg">{`0${index + 1}. ${section.title}`}</span>
-                </AccordionTrigger>
-                <AccordionContent className="py-4">
-                  <p className="text-sm md:text-base text-black dark:text-white">{section.content}</p>
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
+        {/* Accordion */}
+        <AccordionComponent sections={accordionSections} />
 
         {/* Recipes Drawer */}
         {showRecipes && (
