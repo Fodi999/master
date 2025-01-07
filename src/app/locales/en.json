@@ -28,8 +28,8 @@
     ],
     "accordionSections": [
       {
-        "title": "Section 1",
-        "content": "Content for section 1."
+        "title": "How to cook rice properly ?",
+        "content": "How to cook rice for sushi correctly. It needs to be washed well, dried, then left to stand and put to boil."
       },
       {
         "title": "Section 2",
@@ -55,6 +55,7 @@
       "showLess": "Show less",
       "continueReading": "Continue reading",
       "close": "Close",
-      "submit": "Submit"
+      "submit": "Submit",
+      "back": "Back"
     }
   }

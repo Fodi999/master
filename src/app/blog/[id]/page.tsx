@@ -1,9 +1,13 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { use } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import content from "../../locales/en.json"; // импорт JSON файла
+
+const { buttons } = content;
 
 interface BlogPostProps {
   params: Promise<{ id: string }>; // Асинхронный параметр
@@ -30,21 +34,51 @@ export default function BlogPost({ params }: BlogPostProps) {
       {/* Header */}
       <header className="flex justify-between items-center p-6 border-b border-gray-300 dark:border-gray-800">
         <h1 className="text-lg font-bold">SUSHI MASTER</h1>
-        <div className="flex items-center space-x-4">
-          <button
-            onClick={toggleTheme}
-            className="px-4 py-2 text-sm font-medium bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600"
-          >
-            {isDarkMode ? "Light Theme" : "Dark Theme"}
-          </button>
-          <Link href="/" className="text-sm font-medium hover:underline">
-            Menu
-          </Link>
-        </div>
+       
       </header>
 
+      {/* Sidebar for Desktop */}
+      <div className="hidden md:flex fixed left-4 top-1/2 transform -translate-y-1/2 flex-col space-y-4 z-50">
+        <Link href="/blog">
+          <Button
+            className="px-4 py-2 rounded-full transition text-sm font-semibold tracking-wide"
+            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase', opacity: 0.7 }}
+          >
+            {buttons.back}
+          </Button>
+        </Link>
+        <Button
+          onClick={() => alert("Language switch coming soon!")}
+          className="px-4 py-2 rounded-full shadow-lg transition-all duration-300 text-sm font-semibold tracking-wide"
+          style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase', opacity: 0.7 }}
+        >
+          {buttons.language}
+        </Button>
+        <Button
+          onClick={() => alert("Recipes coming soon!")}
+          className="px-4 py-2 rounded-full shadow-lg transition-all duration-300 text-sm font-semibold tracking-wide"
+          style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase', opacity: 0.7 }}
+        >
+          {buttons.myRecipes}
+        </Button>
+        <Button
+          onClick={toggleTheme}
+          className="px-4 py-2 rounded-full shadow-lg transition-all duration-300 text-sm font-semibold tracking-wide"
+          style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase', opacity: 0.7 }}
+        >
+          {isDarkMode ? buttons.lightMode : buttons.darkMode}
+        </Button>
+        <Button
+          onClick={() => alert("Contact form coming soon!")}
+          className="px-4 py-2 rounded-full shadow-lg transition-all duration-300 text-sm font-semibold tracking-wide"
+          style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase', opacity: 0.7 }}
+        >
+          {buttons.contact}
+        </Button>
+      </div>
+
       {/* Main Content */}
-      <main className="container mx-auto px-6 py-12">
+      <main className="container mx-auto px-6 py-12 md:ml-64">
         {/* Featured Post */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           <div>
@@ -52,7 +86,7 @@ export default function BlogPost({ params }: BlogPostProps) {
               January 21, 2025 / By Jenny Jensen / Art / Painting
             </p>
             <h2 className="text-4xl font-bold leading-tight mb-4">
-              Hello friends here I will tell you about the right choice of product 0 {id}
+              {id}.Hello friends here I will tell you about the right choice of product
             </h2>
             <p className="text-gray-700 dark:text-gray-300">
               How to Choose Fresh Fish: A Practical Guide
@@ -97,54 +131,69 @@ export default function BlogPost({ params }: BlogPostProps) {
           {/* Post Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Post 1 */}
-            <div className="flex flex-col">
+            <div className="flex flex-col bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
               <Image
                 src="/00029.jpg"
                 alt="Post 1"
                 width={600}
                 height={400}
-                className="rounded-lg object-cover mb-4"
+                className="w-full h-auto object-cover"
               />
-              <p className="text-sm text-gray-500 mb-2">
-                Oct 24, 2012 / Altyn
-              </p>
-              <h4 className="text-lg font-bold">
-                Home of the Big Home Kit Skill of Mix Ups in Tim
-              </h4>
+              <div className="p-4">
+                <p className="text-sm text-gray-500 mb-2">
+                  Oct 24, 2012 / Altyn
+                </p>
+                <h4 className="text-lg font-bold mb-2">
+                  Home of the Big Home Kit Skill of Mix Ups in Tim
+                </h4>
+                <Link href="/blog/Hello">
+                  <Button className="text-blue-500 hover:underline">Read More</Button>
+                </Link>
+              </div>
             </div>
 
             {/* Post 2 */}
-            <div className="flex flex-col">
+            <div className="flex flex-col bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
               <Image
                 src="/00030.jpg"
                 alt="Post 2"
                 width={600}
                 height={400}
-                className="rounded-lg object-cover mb-4"
+                className="w-full h-auto object-cover"
               />
-              <p className="text-sm text-gray-500 mb-2">
-                Nov 24, 2012 / Design
-              </p>
-              <h4 className="text-lg font-bold">
-                Read Always Falls Buttered Side Tip
-              </h4>
+              <div className="p-4">
+                <p className="text-sm text-gray-500 mb-2">
+                  Nov 24, 2012 / Design
+                </p>
+                <h4 className="text-lg font-bold mb-2">
+                  Read Always Falls Buttered Side Tip
+                </h4>
+                <Link href="/blog/Hello">
+                  <Button className="text-blue-500 hover:underline">Read More</Button>
+                </Link>
+              </div>
             </div>
 
             {/* Post 3 */}
-            <div className="flex flex-col">
+            <div className="flex flex-col bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
               <Image
                 src="/00031.jpg"
                 alt="Post 3"
                 width={600}
                 height={400}
-                className="rounded-lg object-cover mb-4"
+                className="w-full h-auto object-cover"
               />
-              <p className="text-sm text-gray-500 mb-2">
-                Dec 24, 2012 / Altyn
-              </p>
-              <h4 className="text-lg font-bold">
-                The Best Blog Out There Today Now
-              </h4>
+              <div className="p-4">
+                <p className="text-sm text-gray-500 mb-2">
+                  Dec 24, 2012 / Altyn
+                </p>
+                <h4 className="text-lg font-bold mb-2">
+                  The Best Blog Out There Today Now
+                </h4>
+                <Link href="/blog/Hello">
+                  <Button className="text-blue-500 hover:underline">Read More</Button>
+                </Link>
+              </div>
             </div>
           </div>
         </section>
@@ -161,7 +210,3 @@ export default function BlogPost({ params }: BlogPostProps) {
     </div>
   );
 }
-
-
-
-

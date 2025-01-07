@@ -220,15 +220,25 @@ export default function Home() {
           </div>
         </main>
         {/* Accordion */}
-        <div className="w-full max-w-5xl px-4 md:px-12 py-8 -mt-20 bg-gray-100 dark:bg-gray-900 rounded-lg mx-4 md:mx-auto shadow-lg">
+        <div className="w-full max-w-5xl mx-auto py-8 px-4 bg-gray-100 dark:bg-gray-900">
+          {/* Название аккордеона */}
+          <h2 className="text-2xl font-bold text-black dark:text-white mb-6">
+            Frequently Asked Questions
+          </h2>
+
+          {/* Аккордеон */}
           <Accordion type="single" collapsible>
             {accordionSections.map((section, index) => (
-              <AccordionItem key={index} value={`item-${index + 1}`} className="mb-4">
-                <AccordionTrigger className="px-4 py-2 bg-gray-200 dark:bg-gray-800 rounded-t-lg text-left text-lg font-semibold cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700 transition">
-                  {section.title}
+              <AccordionItem
+                key={index}
+                value={`item-${index + 1}`}
+                className="border-b border-gray-300 dark:border-gray-700"
+              >
+                <AccordionTrigger className="flex justify-between items-center w-full py-4 text-lg font-semibold text-black dark:text-white">
+                  <span className="text-sm md:text-lg">{`0${index + 1}. ${section.title}`}</span>
                 </AccordionTrigger>
-                <AccordionContent className="px-4 py-2 bg-gray-50 dark:bg-gray-900 rounded-b-lg text-base text-black dark:text-white transition-colors duration-300">
-                  {section.content}
+                <AccordionContent className="py-4">
+                  <p className="text-sm md:text-base text-black dark:text-white">{section.content}</p>
                 </AccordionContent>
               </AccordionItem>
             ))}
