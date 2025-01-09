@@ -6,6 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import content from "../../locales/en.json"; // импорт JSON файла
+import Header from "@/components/Header"; // импорт нового Header компонента
+import Footer from "@/components/Footer"; // импорт Footer компонента
 
 const { buttons } = content;
 
@@ -16,6 +18,7 @@ interface BlogPostProps {
 export default function BlogPost({ params }: BlogPostProps) {
   const { id } = use(params);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     if (isDarkMode) {
@@ -29,13 +32,30 @@ export default function BlogPost({ params }: BlogPostProps) {
     setIsDarkMode(!isDarkMode);
   };
 
+  const toggleLanguage = () => {
+    alert("Language switch coming soon!");
+  };
+
+  const toggleRecipes = () => {
+    alert("Recipes coming soon!");
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
-      {/* Header */}
-      <header className="flex justify-between items-center p-6 border-b border-gray-300 dark:border-gray-800">
-        <h1 className="text-lg font-bold">SUSHI MASTER</h1>
-       
-      </header>
+      <Header
+        toggleMenu={toggleMenu}
+        isMenuOpen={isMenuOpen}
+        toggleRecipes={toggleRecipes}
+        toggleLanguage={toggleLanguage}
+        toggleTheme={toggleTheme}
+        isDarkMode={isDarkMode}
+        buttons={buttons}
+        contactForm={{ title: "Contact Us", description: "Contact form coming soon!" }}
+      />
 
       {/* Sidebar for Desktop */}
       <div className="hidden md:flex fixed left-4 top-1/2 transform -translate-y-1/2 flex-col space-y-4 z-50">
@@ -48,14 +68,14 @@ export default function BlogPost({ params }: BlogPostProps) {
           </Button>
         </Link>
         <Button
-          onClick={() => alert("Language switch coming soon!")}
+          onClick={toggleLanguage}
           className="px-4 py-2 rounded-full shadow-lg transition-all duration-300 text-sm font-semibold tracking-wide"
           style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase', opacity: 0.7 }}
         >
           {buttons.language}
         </Button>
         <Button
-          onClick={() => alert("Recipes coming soon!")}
+          onClick={toggleRecipes}
           className="px-4 py-2 rounded-full shadow-lg transition-all duration-300 text-sm font-semibold tracking-wide"
           style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase', opacity: 0.7 }}
         >
@@ -111,9 +131,6 @@ export default function BlogPost({ params }: BlogPostProps) {
             <h3 className="text-lg font-bold uppercase tracking-wide">
               Latest Posts
             </h3>
-            <Link href="/all" className="text-sm font-medium hover:underline">
-              View All
-            </Link>
           </div>
 
           {/* Category Filters */}
@@ -200,13 +217,7 @@ export default function BlogPost({ params }: BlogPostProps) {
       </main>
 
       {/* Footer */}
-      <footer className="w-full text-center py-4 flex flex-wrap justify-center items-center">
-        <div className="border-t border-gray-700 w-full md:w-1/3"></div>
-        <div className="text-sm px-4 whitespace-nowrap">
-          web sushi master <a href="https://www.facebook.com/dima.fomin" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Dima Fomin</a>
-        </div>
-        <div className="border-t border-gray-700 w-full md:w-1/3"></div>
-      </footer>
+      <Footer />
     </div>
   );
 }
