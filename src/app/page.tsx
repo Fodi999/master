@@ -163,7 +163,7 @@ export default function Home() {
           )}
 
           {/* Scroll Indicator */}
-          <div className="flex justify-center space-x-2 mt-4">
+          <div className="fixed bottom-16 left-0 right-0 flex justify-center space-x-2 bg-white dark:bg-black bg-opacity-10">
             {pages.map((_, index) => (
               <div
                 key={index}
@@ -174,10 +174,10 @@ export default function Home() {
               </div>
             ))}
           </div>
-
-          {/* Footer */}
-          <Footer />
         </div>
+
+        {/* Footer */}
+        <Footer />
       </div>
     </>
   );

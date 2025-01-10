@@ -7,13 +7,17 @@ import { useState, useEffect } from "react";
 import content from "../locales/en.json"; // импорт JSON файла
 import Header from "@/components/Header"; // импорт нового Header компонента
 import Footer from "@/components/Footer"; // импорт Footer компонента
-import { InputOTP } from "@/components/ui/input-otp"; // импорт компонента InputOTP
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp"; // импорт компонента InputOTP
 
 const { buttons } = content;
 
 export default function Recipes() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [isRecipeVisible, setIsRecipeVisible] = useState(false);
+
+  const correctOtp = "123456"; // Фиктивный код OTP
 
   useEffect(() => {
     if (isDarkMode) {
@@ -39,6 +43,20 @@ export default function Recipes() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleOtpChange = (otp: string) => {
+    setOtp(otp);
+    console.log(otp);
+  };
+
+  const verifyOtp = () => {
+    if (otp === correctOtp) {
+      setIsRecipeVisible(true);
+      alert("Access granted! Enjoy the recipe.");
+    } else {
+      alert("Incorrect OTP. Please try again.");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
       <Header
@@ -55,38 +73,31 @@ export default function Recipes() {
       {/* Sidebar for Desktop */}
       <div className="hidden md:flex fixed left-4 top-1/2 transform -translate-y-1/2 flex-col space-y-4 z-50">
         <Link href="/">
-          <Button
-            className="px-4 py-2 rounded-full transition text-sm font-semibold tracking-wide"
-            style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase', opacity: 0.7 }}
-          >
+          <Button className="px-4 py-2 rounded-full transition text-sm font-semibold tracking-wide">
             {buttons.home}
           </Button>
         </Link>
         <Button
           onClick={toggleLanguage}
           className="px-4 py-2 rounded-full shadow-lg transition-all duration-300 text-sm font-semibold tracking-wide"
-          style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase', opacity: 0.7 }}
         >
           {buttons.language}
         </Button>
         <Button
           onClick={toggleRecipes}
           className="px-4 py-2 rounded-full shadow-lg transition-all duration-300 text-sm font-semibold tracking-wide"
-          style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase', opacity: 0.7 }}
         >
           {buttons.myRecipes}
         </Button>
         <Button
           onClick={toggleTheme}
           className="px-4 py-2 rounded-full shadow-lg transition-all duration-300 text-sm font-semibold tracking-wide"
-          style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase', opacity: 0.7 }}
         >
           {isDarkMode ? buttons.lightMode : buttons.darkMode}
         </Button>
         <Button
           onClick={() => alert("Contact form coming soon!")}
           className="px-4 py-2 rounded-full shadow-lg transition-all duration-300 text-sm font-semibold tracking-wide"
-          style={{ backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', textTransform: 'uppercase', opacity: 0.7 }}
         >
           {buttons.contact}
         </Button>
@@ -94,35 +105,50 @@ export default function Recipes() {
 
       {/* Main Content */}
       <main className="container mx-auto px-6 py-12 md:ml-64">
-        {/* Featured Recipe */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           <div>
-            <h2 className="text-4xl font-bold leading-tight mb-4">
-              Featured Recipe
-            </h2>
-            <p className="text-gray-700 dark:text-gray-300">
-              Discover our featured recipe of the month. This recipe is perfect for those who love to cook and want to try something new.
+            <h2 className="text-4xl font-bold leading-tight mb-4">Delicious Recipe</h2>
+            <p className="text-gray-700 dark:text-gray-300 mb-4">
+              This is a secret recipe that only authorized users can see. Enjoy your exclusive access to this amazing dish!
             </p>
+            {!isRecipeVisible && (
+              <div className="flex items-center space-x-4 mt-4">
+                <InputOTP value={otp} onChange={handleOtpChange} maxLength={6}>
+                  <InputOTPGroup>
+                    {Array.from({ length: 6 }).map((_, index) => (
+                      <InputOTPSlot key={index} index={index} />
+                    ))}
+                  </InputOTPGroup>
+                </InputOTP>
+                <Button
+                  onClick={verifyOtp}
+                  className="px-4 py-2 rounded-full shadow-lg transition-all duration-300 text-sm font-semibold tracking-wide"
+                >
+                  Verify
+                </Button>
+              </div>
+            )}
+            <div className={`mt-4 ${!isRecipeVisible ? "blur-sm" : ""}`}>
+              <p>
+                Here is the rest of the recipe content that was hidden before. Follow these steps to make the dish:
+              </p>
+              <ul className="list-disc list-inside mt-2">
+                <li>Step 1: Prepare the ingredients.</li>
+                <li>Step 2: Mix the ingredients together.</li>
+                <li>Step 3: Cook the mixture over medium heat.</li>
+                <li>Step 4: Serve and enjoy your meal!</li>
+              </ul>
+            </div>
           </div>
           <div>
             <Image
               src="/00031.jpg"
-              alt="Featured Recipe"
+              alt="Recipe"
               width={600}
               height={400}
-              className="w-full h-auto object-cover rounded-lg shadow-md"
+              className="w-full h-auto object-cover rounded-lg shadow-md mb-4"
             />
           </div>
-        </section>
-
-        {/* Input OTP */}
-        <section className="mb-12">
-          <h3 className="text-lg font-bold uppercase tracking-wide mb-4">
-            Enter OTP
-          </h3>
-          <InputOTP maxLength={6} onChange={(otp: string) => console.log(otp)}>
-            <span className="text-sm text-gray-500">Введите 6-значный код</span>
-          </InputOTP>
         </section>
 
         {/* Latest Recipes */}
@@ -161,7 +187,7 @@ export default function Recipes() {
                 alt="Recipe 2"
                 width={600}
                 height={400}
-                className="w-full h-auto object-cover"
+                className="w-full х-auto object-cover"
               />
               <div className="p-4">
                 <h4 className="text-lg font-bold mb-2">
@@ -180,7 +206,7 @@ export default function Recipes() {
                 alt="Recipe 3"
                 width={600}
                 height={400}
-                className="w-full h-auto object-cover"
+                className="w-full х-auto object-cover"
               />
               <div className="p-4">
                 <h4 className="text-lg font-bold mb-2">
@@ -195,9 +221,7 @@ export default function Recipes() {
         </section>
       </main>
 
-      {/* Footer */}
       <Footer />
     </div>
   );
 }
-

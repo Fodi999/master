@@ -108,18 +108,6 @@ export default function Blog() {
               </h3>
             </div>
 
-            {/* Category Filters */}
-            <div className="flex space-x-4 mb-8 overflow-x-auto">
-              {["All", "Design", "Altyn"].map((category) => (
-                <button
-                  key={category}
-                  className="text-sm font-medium px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600"
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-
             {/* Post Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Post 1 */}
